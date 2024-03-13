@@ -16,7 +16,7 @@ class FormCompany extends StatelessWidget {
       padding: const EdgeInsets.all(12),
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        color: Colors.redAccent,
+        color: statusColors[order.status],
         borderRadius: BorderRadius.circular(
           12,
         ),
@@ -46,7 +46,7 @@ class FormCompany extends StatelessWidget {
             height: 3,
           ),
           Text(
-            "Номер телефона: " + order.user.login,
+            "Номер телефона: ${order.user.login}",
             style: const TextStyle(
               fontSize: 16,
               color: Color(0xFF061E42),
@@ -75,38 +75,8 @@ class FormCompany extends StatelessWidget {
           const SizedBox(
             height: 15,
           ),
-          const Text(
-            "Компания: " + "",
-            style: TextStyle(
-              fontSize: 16,
-              color: Color(0xFF061E42),
-            ),
-          ),
-          const SizedBox(
-            height: 3,
-          ),
-          const Text(
-            "ИНН: " + "1450863",
-            style: TextStyle(
-              fontSize: 16,
-              color: Color(0xFF061E42),
-            ),
-          ),
-          const SizedBox(
-            height: 3,
-          ),
-          const Text(
-            "Телефон: " + "+998909716872",
-            style: TextStyle(
-              fontSize: 16,
-              color: Color(0xFF061E42),
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
           Text(
-            "Cтатус заказа: " + getStatusTranslation(order.status),
+            "Компания: ${order.companyName}",
             style: const TextStyle(
               fontSize: 16,
               color: Color(0xFF061E42),
@@ -116,7 +86,37 @@ class FormCompany extends StatelessWidget {
             height: 3,
           ),
           Text(
-            "Время заказа: " + "${formatDateTime(order.createdAt)}",
+            "ИНН: ${order.companyINN}",
+            style: const TextStyle(
+              fontSize: 16,
+              color: Color(0xFF061E42),
+            ),
+          ),
+          const SizedBox(
+            height: 3,
+          ),
+          Text(
+            "Телефон: ${order.companyPhone}",
+            style: const TextStyle(
+              fontSize: 16,
+              color: Color(0xFF061E42),
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Text(
+            "Cтатус заказа: ${getStatusTranslation(order.status)}",
+            style: const TextStyle(
+              fontSize: 16,
+              color: Color(0xFF061E42),
+            ),
+          ),
+          const SizedBox(
+            height: 3,
+          ),
+          Text(
+            "Время заказа: ${formatDateTime(order.createdAt)}",
             style: const TextStyle(
               fontSize: 16,
               color: Color(0xFF061E42),
@@ -136,7 +136,7 @@ class FormCompany extends StatelessWidget {
             height: 10,
           ),
           Text(
-            formatPrice(int.parse(order.totalPrice)) + " сум",
+            "${formatPrice(int.parse(order.totalPrice))} сум",
             style: const TextStyle(
               fontSize: 35,
               color: Color(0xFF061E42),

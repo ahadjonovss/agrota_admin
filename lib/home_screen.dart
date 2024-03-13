@@ -19,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
 
-  List orders = [];
+  List<OrderModel> orders = [];
 
   void onTap(int index, List<OrderModel> allOrders) {
     if (index == 0) {
@@ -28,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
       orders = allOrders
           .where((element) => element.paymentType.id == index)
           .toList();
+      orders.sort((a, b) => a.createdAt.compareTo(b.createdAt));
     }
     setState(() {});
   }

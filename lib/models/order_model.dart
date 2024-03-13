@@ -8,11 +8,18 @@ class OrderModel extends Equatable {
   final String totalPrice;
   final String lan, lat;
   final User user;
+  final String companyName;
+  final String companyINN;
+  final String companyPhone;
+
   final PaymentType paymentType;
   final DeliveryType deliveryTypes;
   final Branch branch;
 
   const OrderModel({
+    this.companyName = '',
+    this.companyINN = '',
+    this.companyPhone = '',
     required this.id,
     required this.createdAt,
     required this.updatedAt,
@@ -40,11 +47,17 @@ class OrderModel extends Equatable {
         user,
         paymentType,
         deliveryTypes,
-        branch
+        branch,
+        companyINN,
+        companyPhone,
+        companyPhone
       ];
 
   factory OrderModel.fromJson(Map<String, dynamic> json) => OrderModel(
         id: json['id'],
+        companyINN: json['companyInn'] ?? '',
+        companyName: json['companyName'] ?? '',
+        companyPhone: json['companyPhone'] ?? '',
         createdAt: DateTime.parse(json['createdAt']),
         updatedAt: DateTime.parse(json['updatedAt']),
         status: json['status'],

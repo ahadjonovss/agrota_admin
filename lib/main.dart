@@ -1,4 +1,6 @@
 import 'package:agrota_admin/cubits/orders/orders_cubit.dart';
+import 'package:agrota_admin/service/notification_service.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,8 +8,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'home_screen.dart';
 
+Future<void> subscribeToTopic() async {
+  await FirebaseMessaging.instance.subscribeToTopic('/topics/notifications');
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await NotificationService.initialize();
+  subscribeToTopic();
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
   runApp(isLoggedIn

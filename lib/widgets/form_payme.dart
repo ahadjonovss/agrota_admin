@@ -16,7 +16,7 @@ class FormPayme extends StatelessWidget {
       padding: const EdgeInsets.all(12),
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        color: Colors.green,
+        color: statusColors[order.status],
         borderRadius: BorderRadius.circular(
           12,
         ),
