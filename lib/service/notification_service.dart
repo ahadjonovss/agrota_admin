@@ -14,6 +14,28 @@ InitializationSettings initializationSettings = const InitializationSettings(
   iOS: DarwinInitializationSettings(),
 );
 
+final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+
+Future<void> initFCM() async {
+  // Request permission for iOS devices and get the token
+  NotificationSettings settings = await _firebaseMessaging.requestPermission(
+    alert: true,
+    badge: true,
+    sound: true,
+    provisional: false,
+  );
+
+  if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+    print('User granted permission');
+
+    // Use the _firebaseMessaging instance to get the token
+    String? token = await _firebaseMessaging.getToken();
+    print("Firebase Messaging Token: $token");
+  } else {
+    print('User declined or has not accepted permission');
+  }
+}
+
 sealed class NotificationService {
   const NotificationService._();
 
@@ -25,6 +47,13 @@ sealed class NotificationService {
     foregroundNotification();
     backgroundNotification();
     await terminateNotification();
+    initFCM();
+    try {
+      await FirebaseMessaging.instance.subscribeToTopic('notifications');
+      print("Subscribed");
+    } catch (e) {
+      print("Could not subscribed $e");
+    }
   }
 
   static Future<void> setupFlutterNotifications() async {
@@ -55,6 +84,7 @@ sealed class NotificationService {
   }
 
   static void showFlutterNotification(RemoteMessage message) {
+    print("Local notif shown ${message.data}");
     final RemoteNotification? notification = message.notification;
     if (message.data.isNotEmpty && !kIsWeb) {
       flutterLocalNotificationsPlugin.show(
