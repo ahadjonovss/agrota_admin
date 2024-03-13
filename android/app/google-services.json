@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "516170272879",
+    "project_id": "agrota-5f63d",
+    "storage_bucket": "agrota-5f63d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:516170272879:android:50604ec296cace18ef3d9a",
+        "android_client_info": {
+          "package_name": "com.example.agrota_admin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQQYOGvxWrY5DVTpD_NkVN0oS8S8nvaCM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
