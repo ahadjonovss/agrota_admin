@@ -58,8 +58,8 @@ class OrderModel extends Equatable {
         companyINN: json['companyInn'] ?? '',
         companyName: json['companyName'] ?? '',
         companyPhone: json['companyPhone'] ?? '',
-        createdAt: DateTime.parse(json['createdAt']),
-        updatedAt: DateTime.parse(json['updatedAt']),
+        createdAt: DateTime.parse(json['createdAt']).toUtc(),
+        updatedAt: DateTime.parse(json['updatedAt']).toUtc(),
         status: json['status'],
         cart: List<ProductItem>.from(
             json['cart'].map((x) => ProductItem.fromJson(x))),
