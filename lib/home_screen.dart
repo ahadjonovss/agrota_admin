@@ -41,6 +41,12 @@ class _HomeScreenState extends State<HomeScreen> {
           'Agrota Market - Заказы',
           style: TextStyle(color: Color(0xFF061E42)),
         ),
+        actions: [
+          IconButton(onPressed:  () {
+            context.read<OrdersCubit>().fetchNews();
+
+          }, icon: Icon(Icons.refresh))
+        ],
         elevation: 1,
         backgroundColor: const Color(0xFFF5F5F5),
       ),

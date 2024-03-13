@@ -13,13 +13,12 @@ void main() async {
 
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
-  runApp(isLoggedIn
-      ? MultiBlocProvider(
-          providers: [BlocProvider(create: (context) => OrdersCubit())],
-          child: MaterialApp(
-              home: HomeScreen(), debugShowCheckedModeBanner: false),
-        )
-      : const LoginPage());
+  runApp(MultiBlocProvider(
+    providers: [BlocProvider(create: (context) => OrdersCubit())],
+    child: isLoggedIn
+        ? MaterialApp(home: HomeScreen(), debugShowCheckedModeBanner: false)
+        : const LoginPage(),
+  ));
 }
 
 class LoginPage extends StatelessWidget {
