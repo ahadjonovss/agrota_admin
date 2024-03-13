@@ -1,4 +1,5 @@
 import 'package:agrota_admin/cubits/orders/orders_cubit.dart';
+import 'package:agrota_admin/models/order_model.dart';
 import 'package:agrota_admin/widgets/order_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,19 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     context.read<OrdersCubit>().fetchNews();
     super.initState();
+  }
+
+  List orders = [];
+
+  void onTap(int index, List<OrderModel> allOrders) {
+    if (index == 0) {
+      orders = allOrders;
+    } else {
+      orders = allOrders
+          .where((element) => element.paymentType.id == index)
+          .toList();
+    }
+    setState(() {});
   }
 
   @override
@@ -36,48 +50,59 @@ class _HomeScreenState extends State<HomeScreen> {
             physics: const BouncingScrollPhysics(),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  FilterButton(
-                    filter: Filter.All,
-                    isActive: _activeFilter == Filter.All,
-                    onPressed: () {
-                      setState(() {
-                        _activeFilter = Filter.All;
-                      });
-                    },
-                  ),
-                  const SizedBox(width: 10),
-                  FilterButton(
-                    filter: Filter.FormCash,
-                    isActive: _activeFilter == Filter.FormCash,
-                    onPressed: () {
-                      setState(() {
-                        _activeFilter = Filter.FormCash;
-                      });
-                    },
-                  ),
-                  const SizedBox(width: 10),
-                  FilterButton(
-                    filter: Filter.FormCompany,
-                    isActive: _activeFilter == Filter.FormCompany,
-                    onPressed: () {
-                      setState(() {
-                        _activeFilter = Filter.FormCompany;
-                      });
-                    },
-                  ),
-                  const SizedBox(width: 10),
-                  FilterButton(
-                    filter: Filter.FormPayme,
-                    isActive: _activeFilter == Filter.FormPayme,
-                    onPressed: () {
-                      setState(() {
-                        _activeFilter = Filter.FormPayme;
-                      });
-                    },
-                  ),
-                ],
+              child: BlocBuilder<OrdersCubit, OrderState>(
+                builder: (context, state) {
+                  return Row(
+                    children: [
+                      FilterButton(
+                        filter: Filter.All,
+                        isActive: _activeFilter == Filter.All,
+                        onPressed: () {
+                          setState(() {
+                            onTap(0, state.orders);
+                            _activeFilter = Filter.All;
+                          });
+                        },
+                      ),
+                      const SizedBox(width: 10),
+                      FilterButton(
+                        filter: Filter.FormCash,
+                        isActive: _activeFilter == Filter.FormCash,
+                        onPressed: () {
+                          onTap(2, state.orders);
+
+                          setState(() {
+                            _activeFilter = Filter.FormCash;
+                          });
+                        },
+                      ),
+                      const SizedBox(width: 10),
+                      FilterButton(
+                        filter: Filter.FormCompany,
+                        isActive: _activeFilter == Filter.FormCompany,
+                        onPressed: () {
+                          onTap(3, state.orders);
+
+                          setState(() {
+                            _activeFilter = Filter.FormCompany;
+                          });
+                        },
+                      ),
+                      const SizedBox(width: 10),
+                      FilterButton(
+                        filter: Filter.FormPayme,
+                        isActive: _activeFilter == Filter.FormPayme,
+                        onPressed: () {
+                          onTap(1, state.orders);
+
+                          setState(() {
+                            _activeFilter = Filter.FormPayme;
+                          });
+                        },
+                      ),
+                    ],
+                  );
+                },
               ),
             ),
           ),
@@ -86,11 +111,12 @@ class _HomeScreenState extends State<HomeScreen> {
               if (state.status == ResponseStatus.success) {
                 return Expanded(
                   child: ListView.builder(
-                    itemCount: state.orders.length,
+                    itemCount:
+                        orders.isEmpty ? state.orders.length : orders.length,
                     physics: const BouncingScrollPhysics(),
                     padding: const EdgeInsets.only(top: 8.0),
-                    itemBuilder: (context, index) =>
-                        OrderItem(state.orders[index]),
+                    itemBuilder: (context, index) => OrderItem(
+                        orders.isEmpty ? state.orders[index] : orders[index]),
                   ),
                 );
               } else if (state.status == ResponseStatus.loading) {
