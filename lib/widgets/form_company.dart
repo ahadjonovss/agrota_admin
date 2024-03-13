@@ -1,7 +1,11 @@
+import 'package:agrota_admin/models/order_model.dart';
+import 'package:agrota_admin/utils/assistants.dart';
 import 'package:flutter/material.dart';
 
 class FormCompany extends StatelessWidget {
-  const FormCompany({
+  OrderModel order;
+  FormCompany(
+    this.order, {
     super.key,
   });
 
@@ -21,119 +25,119 @@ class FormCompany extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Номер заказа: " + "61",
-            style: TextStyle(
+            "Номер заказа: " + "${order.id}",
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 18,
               color: Color(0xFF061E42),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Text(
-            "Заказчик: " + "Отабек",
-            style: TextStyle(
+            "Заказчик:  + ${order.user.firstname}",
+            style: const TextStyle(
               fontSize: 16,
               color: Color(0xFF061E42),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 3,
           ),
           Text(
-            "Номер телефона: " + "+998981118006",
-            style: TextStyle(
+            "Номер телефона: " + order.user.login,
+            style: const TextStyle(
               fontSize: 16,
               color: Color(0xFF061E42),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 3,
           ),
-          Text(
+          const Text(
             "Тип оплаты: " + "Перечисление",
             style: TextStyle(
               fontSize: 16,
               color: Color(0xFF061E42),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 3,
           ),
           Text(
-            "Филиал: " + "Головной офис",
-            style: TextStyle(
+            "Филиал: " + "${order.branch.name['ru']}",
+            style: const TextStyle(
               fontSize: 16,
               color: Color(0xFF061E42),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
-          Text(
-            "Компания: " + "Energy Agro",
+          const Text(
+            "Компания: " + "",
             style: TextStyle(
               fontSize: 16,
               color: Color(0xFF061E42),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 3,
           ),
-          Text(
+          const Text(
             "ИНН: " + "1450863",
             style: TextStyle(
               fontSize: 16,
               color: Color(0xFF061E42),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 3,
           ),
-          Text(
+          const Text(
             "Телефон: " + "+998909716872",
             style: TextStyle(
               fontSize: 16,
               color: Color(0xFF061E42),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Text(
-            "Cтатус заказа: " + "Ожидание оплаты",
-            style: TextStyle(
+            "Cтатус заказа: " + getStatusTranslation(order.status),
+            style: const TextStyle(
               fontSize: 16,
               color: Color(0xFF061E42),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 3,
           ),
           Text(
-            "Время заказа: " + "10.03.2024  17:25",
-            style: TextStyle(
+            "Время заказа: " + "${formatDateTime(order.createdAt)}",
+            style: const TextStyle(
               fontSize: 16,
               color: Color(0xFF061E42),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
-          Text(
+          const Text(
             "Сумма заказа:",
             style: TextStyle(
               fontSize: 16,
               color: Color(0xFF061E42),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Text(
-            "500 000" + " сум",
-            style: TextStyle(
+            formatPrice(int.parse(order.totalPrice)) + " сум",
+            style: const TextStyle(
               fontSize: 35,
               color: Color(0xFF061E42),
             ),

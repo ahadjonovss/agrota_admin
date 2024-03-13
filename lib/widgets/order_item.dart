@@ -14,9 +14,9 @@ class OrderItem extends StatelessWidget {
       case 2:
         return FormCash(order);
       case 3:
-        return const FormCompany();
+        return FormCompany(order);
       default:
-        return const FormPayme();
+        return FormPayme(order);
     }
   }
 }

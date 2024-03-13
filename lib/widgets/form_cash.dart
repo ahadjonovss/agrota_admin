@@ -16,7 +16,7 @@ class FormCash extends StatelessWidget {
       padding: const EdgeInsets.all(12),
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        color: const Color(0xFF00DBE1),
+        color: statusColors[order.status],
         borderRadius: BorderRadius.circular(
           12,
         ),
@@ -86,7 +86,7 @@ class FormCash extends StatelessWidget {
             height: 3,
           ),
           Text(
-            "Время заказа: " + "${order.createdAt}",
+            "Время заказа: ${formatDateTime(order.createdAt)}",
             style: const TextStyle(
               fontSize: 16,
               color: Color(0xFF061E42),

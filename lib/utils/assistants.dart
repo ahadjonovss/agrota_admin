@@ -1,3 +1,12 @@
+import 'package:flutter/material.dart';
+
+List statusColors = [
+  Colors.yellow,
+  Colors.orangeAccent,
+  Colors.blue.shade400,
+  Colors.green
+];
+
 String getStatusTranslation(int status) {
   List<String> statusTranslations = [
     'Создано',
@@ -22,7 +31,7 @@ String formatDateTime(DateTime dateTime) {
   String hour = twoDigits(dateTime.hour);
   String minute = twoDigits(dateTime.minute);
 
-  return "$day.$month.$year / $hour:$minute";
+  return "$day.$month.$year  $hour:$minute";
 }
 
 String formatPrice(num price) {
