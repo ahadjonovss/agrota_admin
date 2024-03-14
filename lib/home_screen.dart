@@ -28,7 +28,6 @@ class _HomeScreenState extends State<HomeScreen> {
       orders = allOrders
           .where((element) => element.paymentType.id == index)
           .toList();
-      orders.sort((a, b) => a.createdAt.compareTo(b.createdAt));
     }
     setState(() {});
   }
@@ -42,10 +41,11 @@ class _HomeScreenState extends State<HomeScreen> {
           style: TextStyle(color: Color(0xFF061E42)),
         ),
         actions: [
-          IconButton(onPressed:  () {
-            context.read<OrdersCubit>().fetchNews();
-
-          }, icon: Icon(Icons.refresh))
+          IconButton(
+              onPressed: () {
+                context.read<OrdersCubit>().fetchNews();
+              },
+              icon: const Icon(Icons.refresh))
         ],
         elevation: 1,
         backgroundColor: const Color(0xFFF5F5F5),

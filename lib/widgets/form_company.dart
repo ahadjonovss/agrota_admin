@@ -65,9 +65,9 @@ class FormCompany extends StatelessWidget {
           const SizedBox(
             height: 3,
           ),
-          Text(
-            "Филиал: " + "${order.branch.name['ru']}",
-            style: const TextStyle(
+          const Text(
+            "Филиал: " + "\"AGROTA HOLDINGS\" Головной офис",
+            style: TextStyle(
               fontSize: 16,
               color: Color(0xFF061E42),
             ),

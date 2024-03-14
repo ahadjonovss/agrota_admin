@@ -9,7 +9,7 @@ List statusColors = [
 
 String getStatusTranslation(int status) {
   List<String> statusTranslations = [
-    'Создано',
+    'Ожидание оплаты',
     'В процессе',
     'Доставляется',
     'Завершено',

@@ -16,11 +16,12 @@ class OrdersCubit extends Cubit<OrderState> {
     emit(state.copyWith(status: ResponseStatus.loading));
     try {
       final response = await _dio.get('order');
-      print("Mana status ${response.statusCode}");
       if (response.statusCode == 200) {
         final List<dynamic> responseData = response.data;
+
         final orders = List<OrderModel>.from(
             responseData.map((i) => OrderModel.fromJson(i)));
+        orders.sort((a, b) => b.createdAt.compareTo(a.createdAt));
         emit(state.copyWith(status: ResponseStatus.success, orders: orders));
       } else {
         emit(state.copyWith(

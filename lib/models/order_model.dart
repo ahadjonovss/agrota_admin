@@ -58,8 +58,8 @@ class OrderModel extends Equatable {
         companyINN: json['companyInn'] ?? '',
         companyName: json['companyName'] ?? '',
         companyPhone: json['companyPhone'] ?? '',
-        createdAt: DateTime.parse(json['createdAt']).toUtc(),
-        updatedAt: DateTime.parse(json['updatedAt']).toUtc(),
+        createdAt: DateTime.parse(json['createdAt']).toLocal(),
+        updatedAt: DateTime.parse(json['updatedAt']).toLocal(),
         status: json['status'],
         cart: List<ProductItem>.from(
             json['cart'].map((x) => ProductItem.fromJson(x))),
@@ -215,7 +215,7 @@ class Category extends Equatable {
         parentId: json['parent_id'],
         code: json['code'],
         packageCode: json['package_code'],
-        vatPercent: json['vat_percent'],
+        vatPercent: (json['vat_percent'] ?? 0).toDouble(),
         isMain: json['isMain'],
         isDeleted: json['isDeleted'],
       );
