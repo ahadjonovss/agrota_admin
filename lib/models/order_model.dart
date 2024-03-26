@@ -54,18 +54,22 @@ class OrderModel extends Equatable {
       ];
 
   factory OrderModel.fromJson(Map<String, dynamic> json) => OrderModel(
-        id: json['id'],
+        id: json['id'] ?? 0,
         companyINN: json['companyInn'] ?? '',
         companyName: json['companyName'] ?? '',
         companyPhone: json['companyPhone'] ?? '',
-        createdAt: DateTime.parse(json['createdAt']).toLocal(),
-        updatedAt: DateTime.parse(json['updatedAt']).toLocal(),
-        status: json['status'],
+        createdAt:
+            DateTime.parse(json['createdAt'] ?? DateTime.now().toString())
+                .toLocal(),
+        updatedAt:
+            DateTime.parse(json['updatedAt'] ?? DateTime.now().toString())
+                .toLocal(),
+        status: json['status'] ?? 0,
         cart: List<ProductItem>.from(
-            json['cart'].map((x) => ProductItem.fromJson(x))),
-        totalPrice: json['total_price'],
-        lan: json['lan'],
-        lat: json['lat'],
+            (json['cart'] ?? []).map((x) => ProductItem.fromJson(x))),
+        totalPrice: json['total_price'] ?? '0',
+        lan: json['lan'] ?? '0',
+        lat: json['lat'] ?? '0',
         user: User.fromJson(json['user'] ?? {}),
         paymentType: PaymentType.fromJson(json['paymentType'] ?? {}),
         deliveryTypes: DeliveryType.fromJson(json['deliveryTypes'] ?? {}),
@@ -127,25 +131,33 @@ class ProductItem extends Equatable {
         category
       ];
 
-  factory ProductItem.fromJson(Map<String, dynamic> json) => ProductItem(
-        id: json['product']['id'],
-        createdAt: DateTime.parse(json['product']['createdAt']),
-        updatedAt: DateTime.parse(json['product']['updatedAt']),
-        nameUz: json['product']['name_uz'],
-        nameRu: json['product']['name_ru'],
-        descriptionUz: json['product']['description_uz'],
-        descriptionRu: json['product']['description_ru'],
-        basePrice: json['product']['base_price'],
-        price: json['product']['price'],
-        sellerCode: json['product']['seller_code'],
-        amount: json['product']['amount'],
-        topProduct: json['product']['top_product'],
-        newProduct: json['product']['new_product'],
-        isDeleted: json['product']['isDeleted'],
-        discount: json['product']['discount'],
-        images: ProductImages.fromJson(json['product']['images']),
-        category: Category.fromJson(json['product']['category']),
-      );
+  factory ProductItem.fromJson(Map<String, dynamic> json) {
+    final productJson = json['product'] ??
+        {}; // Fallback to an empty map if 'product' is not found
+    return ProductItem(
+      id: productJson['id'] ?? 0,
+      createdAt: productJson['createdAt'] != null
+          ? DateTime.parse(productJson['createdAt'])
+          : DateTime.now(),
+      updatedAt: productJson['updatedAt'] != null
+          ? DateTime.parse(productJson['updatedAt'])
+          : DateTime.now(),
+      nameUz: productJson['name_uz'] ?? 'Unknown',
+      nameRu: productJson['name_ru'] ?? 'Unknown',
+      descriptionUz: productJson['description_uz'] ?? '',
+      descriptionRu: productJson['description_ru'] ?? '',
+      basePrice: productJson['base_price'] ?? '0',
+      price: productJson['price'] ?? '0',
+      sellerCode: productJson['seller_code'] ?? 'Unknown',
+      amount: productJson['amount'] ?? 0,
+      topProduct: productJson['top_product'] ?? false,
+      newProduct: productJson['new_product'] ?? false,
+      isDeleted: productJson['isDeleted'] ?? false,
+      discount: productJson['discount'] ?? 0,
+      images: ProductImages.fromJson(json['product']['images'] ?? {}),
+      category: Category.fromJson(json['product']['category'] ?? {}),
+    );
+  }
 }
 
 class ProductImages extends Equatable {
